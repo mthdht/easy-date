@@ -1,14 +1,25 @@
 {
-  "name": "vite-starter",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@pharos-lab/easy-date",
+  "private": false,
+  "version": "0.0.1",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/easy-date.umd.cjs",
+  "module": "./dist/easy-date.js",
+  "exports": {
+    ".": {
+      "import": "./dist/easy-date.js",
+      "require": "./dist/easy-date.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^6.3.2"
+    "vite": "^4.0.4"
   }
 }
