@@ -36,8 +36,8 @@ export const formatPresets = {
     // 📅 Date seulement
     dateShort: 'dd/MM/yyyy',                   // 23/04/2025
     dateCompact: 'dd/MM',                      // 23/04
-    dateText: 'dddd d MMMM yyyy',              // mercredi 23 avril 2025
-    dateShortText: 'ddd d MMM yyyy',           // mer. 23 avr. 2025
+    dateText: 'DD d MMMM yyyy',              // mercredi 23 avril 2025
+    dateShortText: 'D d MMM yyyy',           // mer. 23 avr. 2025
     dateTextMonth: 'd MMMM yyyy',              // 23 avril 2025
     dateIso: 'yyyy-MM-dd',                     // 2025-04-23
     dateIsoFull: 'yyyy-MM-dd HH:mm:ss',        // 2025-04-23
@@ -49,7 +49,7 @@ export const formatPresets = {
   
     // 📅🕐 Date + Heure
     dateTime: 'dd/MM/yyyy à HH:mm',            // 23/04/2025 à 15:45
-    dateTimeText: 'dddd d MMMM yyyy à hh:mm',  // mercredi 23 avril 2025 à 3:45 PM
+    dateTimeText: 'DD d MMMM yyyy à HH:mm',  // mercredi 23 avril 2025 à 3:45 PM
     isoTimestamp: 'yyyy-MM-dd HH:mm:ss'        // 2025-04-23 15:45:30
   }
 
