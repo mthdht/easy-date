@@ -30,6 +30,8 @@ const formatTokens = {
 
     s: (date) => date.getSeconds(),
     ss: (date) => String(date.getSeconds()).padStart(2, '0'),
+    t: (date) => date.getHours() < 12 ? 'AM' : 'PM',
+    tt: (date) => date.getHours() < 12 ? 'am' : 'pm',
 }
 
 export const formatPresets = {
@@ -78,9 +80,9 @@ export function formatDate(input, format = "", locale = 'fr-FR') {
         result = result.replace(pattern, value)
     }
 
-    if (format.includes('h') || format.includes('hh')) {
+    if (/\b(hh|h)\b/.test(format) && !/\bt\b/.test(format)) {
         const amPm = date.getHours() < 12 ? 'AM' : 'PM'
-        return `${result} ${amPm}`
+        return `${result} ${amPm}`.trim()
     }
 
     return result

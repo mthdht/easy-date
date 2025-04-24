@@ -25,7 +25,10 @@ function runTests() {
     { format: formatPresets.dateTime, expected: '23/04/2025 à 15:45', label: 'dateTime' },
     { format: formatPresets.dateTimeText, expected: 'mercredi 23 avril 2025 à 15:45', label: 'dateTimeText' },
     { format: formatPresets.isoTimestamp, expected: '2025-04-23 15:45:30', label: 'isoTimestamp' },
-    { format: 'donc dateTimeText DD d MMMM yyyy à hh:mm', expected: 'donc dateTimeText mercredi 23 avril 2025 à 03:45 PM', label: 'custom' },
+    { format: 'hey donc dateTimeText DD d MMMM yyyy à HH:mm', expected: 'hey donc dateTimeText mercredi 23 avril 2025 à 15:45', label: 'custom with false token' },
+    { format: 'hey donc dateTimeText DD d MMMM yyyy à hh:mm', expected: 'hey donc dateTimeText mercredi 23 avril 2025 à 03:45 PM', label: 'custom with am pm expect h in word' },
+    { format: 'hey donc dateTimeText t DD d MMMM yyyy à HH:mm', expected: 'hey donc dateTimeText PM mercredi 23 avril 2025 à 15:45', label: 'custom with ampm token and H' },
+    { format: 'hey donc dateTimeText t DD d MMMM yyyy à hh:mm', expected: 'hey donc dateTimeText PM mercredi 23 avril 2025 à 03:45', label: 'custom with ampm token and h' },
   ]
 
   for (const { format, expected, label } of tests) {
