@@ -57,22 +57,31 @@ export function formatDate(input, format = "", locale = 'fr-FR') {
     const date = input instanceof Date ? input : new Date(input)
     if (isNaN(date)) return ''
 
-    if (typeof format === 'string' && formatPresets[format]) {
-        format = formatPresets[format]
+    if (typeof format === 'object') {
+        return date.toLocaleDateString(locale, format)
     }
 
-    if (typeof format === 'string') {
-        let formattedDate = format.replace(/DD|D|dd|d|MMMM|MMM|MM|M|yyyy|yy|HH|H|hh|h|mm|m|ss|s/g, (token) => {
-            const fn = formatTokens[token]
-            return fn ? fn(date, locale) : token
-        })
+    let result = format
 
-        if (format.includes('h') || format.includes('hh')) {
-            const amPm = date.getHours() < 12 ? 'AM' : 'PM'
-            return `${formattedDate} ${amPm}`
-        }
-        return formattedDate
+    // Trie les tokens par longueur pour éviter que `d` ne remplace dans `dd` ou `dddd`
+    const tokens = Object.keys(formatTokens).sort((a, b) => b.length - a.length)
+
+    for (const token of tokens) {
+        const replacer = formatTokens[token]
+        const value = replacer(date, locale)
+
+        const notSafe = token.length === 1 || ['m', 'h', 'd', 'H', 'M'].includes(token)
+        const pattern = notSafe
+            ? new RegExp(`(?<!\\w)${token}(?!\\w)`, 'g') // pour les tokens courts
+            : new RegExp(token, 'g') // tokens longs → pas besoin de précaution
+
+        result = result.replace(pattern, value)
     }
 
-    return date.toLocaleDateString(locale, format)
+    if (format.includes('h') || format.includes('hh')) {
+        const amPm = date.getHours() < 12 ? 'AM' : 'PM'
+        return `${result} ${amPm}`
+    }
+
+    return result
 }

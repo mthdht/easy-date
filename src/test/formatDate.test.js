@@ -25,7 +25,7 @@ function runTests() {
     { format: formatPresets.dateTime, expected: '23/04/2025 à 15:45', label: 'dateTime' },
     { format: formatPresets.dateTimeText, expected: 'mercredi 23 avril 2025 à 15:45', label: 'dateTimeText' },
     { format: formatPresets.isoTimestamp, expected: '2025-04-23 15:45:30', label: 'isoTimestamp' },
-    { format: 'donc dateTimeText DD d MMMM yyyy à hh:mm', expected: 'mercredi 23 avril 2025 à 15:45', label: 'custom' },
+    { format: 'donc dateTimeText DD d MMMM yyyy à hh:mm', expected: 'donc dateTimeText mercredi 23 avril 2025 à 03:45 PM', label: 'custom' },
   ]
 
   for (const { format, expected, label } of tests) {
