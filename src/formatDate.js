@@ -63,7 +63,7 @@ export function formatDate(input, format = "", locale = 'fr-FR') {
         return date.toLocaleDateString(locale, format)
     }
 
-    let result = format
+    let result = formatPresets[format] || format
 
     // Trie les tokens par longueur pour éviter que `d` ne remplace dans `dd` ou `dddd`
     const tokens = Object.keys(formatTokens).sort((a, b) => b.length - a.length)
