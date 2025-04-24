@@ -15,14 +15,14 @@ function runTests() {
   assertEqual(
     formatDate(d, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }, 'fr-FR'),
     'mercredi 23 avril 2025',
-    'Format avec Intl + fr-FR'
+    'Format avec toLocaleDateString + fr-FR'
   )
 
   // Format string custom (à implémenter plus tard)
   assertEqual(
     formatDate(d, 'dd/MM/yyyy', 'fr-FR'),
     '23/04/2025',
-    'Format custom "dd/MM/yyyy"'
+    'Format custom avec string "dd/MM/yyyy"'
   )
 }
 
