@@ -1,4 +1,4 @@
-import { formatDate, formatPresets, formatRelativeDate } from '../library.js'
+import { formatDate, formatPresets, formatRelativeDate, formatTime } from '../library.js'
 
 const tests = [
   { format: formatPresets.dateShort, expected: '23/04/2025', label: 'dateShort' },
@@ -33,9 +33,23 @@ const testsRelative = [
   { input: new Date('2023-04-25T12:00:00'), expected: 'il y a 2 ans', label: '2 years ago' },
 ]
 
+const testsTime = [
+  { input: '04:35', expected: '4h35', label: 'Time format 04:35' },
+  { input: '14:07', expected: '14h07', label: 'Time format 14:07' },
+  { input: '12:00', expected: '12h', label: 'Time format midnight' },
+  { input: '23:59', expected: '23h59', label: 'Time format 23:59' },
+  { input: '04:00', expected: '4h', label: 'Time format with 0 minute' },
+  { input: '00:35', expected: '00h35', label: 'Time format with 0 hour' },
+  { input: '00:00', expected: '00h00', label: 'Time format with 0 hour and minute' },
+  
+  // Test avec Date
+  { input: new Date('2025-04-23T04:35:00'), expected: '4h35', label: 'Time from Date 04:35' },
+  { input: new Date('2025-04-23T14:07:00'), expected: '14h07', label: 'Time from Date 14:07' },
+]
+
 function assertEqual(actual, expected, label) {
   if (actual === expected) {
-    console.log(`✅ ${label}`)
+    console.log(`✅ ${label}  attendu : ${expected}  reçu    : ${actual}`)
   } else {
     console.error(`❌ ${label}\n  attendu : ${expected}\n  reçu    : ${actual}`)
   }
@@ -55,6 +69,13 @@ function runTests() {
 
   for (const { input, expected, label } of testsRelative) {
     const result = formatRelativeDate(input, 'fr-FR', formatRelativeDateExemple)
+    assertEqual(result, expected, label)
+  }
+
+  console.log('---- TEST formatTime ----')
+
+  for (const { input, expected, label } of testsTime) {
+    const result = formatTime(input, true)  // true pour enlever les zéros inutiles
     assertEqual(result, expected, label)
   }
 
