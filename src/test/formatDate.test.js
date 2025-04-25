@@ -1,4 +1,4 @@
-import { formatDate, formatPresets } from '../library.js'
+import { formatDate, formatPresets, formatRelativeDate } from '../library.js'
 
 const tests = [
   { format: formatPresets.dateShort, expected: '23/04/2025', label: 'dateShort' },
@@ -20,6 +20,19 @@ const tests = [
   { format: 'hey donc dateTimeText t DD d MMMM yyyy à hh:mm', expected: 'hey donc dateTimeText PM mercredi 23 avril 2025 à 03:45', label: 'custom with ampm token and h' },
 ]
 
+const testsRelative = [
+  { input: new Date('2025-04-25T11:59:30'), expected: 'à l\'instant', label: 'Just now' },
+  { input: new Date('2025-04-25T11:00:00'), expected: 'il y a 1 heure', label: '1 hour ago' },
+  { input: new Date('2025-04-25T10:00:00'), expected: 'il y a 2 heures', label: '2 hours ago' },
+  { input: new Date('2025-04-24T12:00:00'), expected: 'hier', label: 'Yesterday' },
+  { input: new Date('2025-04-23T12:00:00'), expected: 'avant-hier', label: '2 days ago' },
+  { input: new Date('2025-04-18T12:00:00'), expected: 'il y a 7 jours', label: '1 week ago' },
+  { input: new Date('2025-04-10T12:00:00'), expected: 'il y a 15 jours', label: '2 weeks ago' },
+  { input: new Date('2025-03-25T12:00:00'), expected: 'le mois dernier', label: '1 month ago' },
+  { input: new Date('2024-04-25T12:00:00'), expected: 'il y a 12 mois', label: '1 year ago' },
+  { input: new Date('2023-04-25T12:00:00'), expected: 'il y a 2 ans', label: '2 years ago' },
+]
+
 function assertEqual(actual, expected, label) {
   if (actual === expected) {
     console.log(`✅ ${label}`)
@@ -29,16 +42,25 @@ function assertEqual(actual, expected, label) {
 }
 
 function runTests() {
-  const d = new Date('2025-04-23T15:45:30')
-
+  const formatDateExemple = new Date('2025-04-23T15:45:30')
+  const formatRelativeDateExemple = new Date('2025-04-25T12:00:00')
+  console.log('---- TEST formatDate ----')
+  
   for (const { format, expected, label } of tests) {
-    const result = formatDate(d, format, 'fr-FR')
+    const result = formatDate(formatDateExemple, format, 'fr-FR')
+    assertEqual(result, expected, label)
+  }
+  
+  console.log('---- TEST relativeDate ----')
+
+  for (const { input, expected, label } of testsRelative) {
+    const result = formatRelativeDate(input, 'fr-FR', formatRelativeDateExemple)
     assertEqual(result, expected, label)
   }
 
   // Test locale string object format
   assertEqual(
-    formatDate(d, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }, 'fr-FR'),
+    formatDate(formatDateExemple, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }, 'fr-FR'),
     'mercredi 23 avril 2025',
     'Format toLocaleDateString avec fr-FR'
   )

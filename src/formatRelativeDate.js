@@ -1,7 +1,7 @@
-export function formatRelativeDate(input, locale = 'fr-FR') {
+export function formatRelativeDate(input, locale = 'fr-FR', toCompare) {
     const date = input instanceof Date ? input : new Date(input)
-    const now = new Date()
-    const diffMs = date.getTime() - now.getTime()
+    const relativeDate = toCompare instanceof Date ? toCompare : new Date(toCompare)
+    const diffMs = date.getTime() - relativeDate.getTime()
     const diffMin = Math.round(diffMs / 60000)
     const diffHr = Math.round(diffMin / 60)
     const diffDay = Math.round(diffHr / 24)
