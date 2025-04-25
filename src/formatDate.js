@@ -34,6 +34,7 @@ const formatTokens = {
     ss: (date) => String(date.getSeconds()).padStart(2, '0'),
     t: (date) => date.getHours() < 12 ? 'AM' : 'PM',
     tt: (date) => date.getHours() < 12 ? 'am' : 'pm',
+    'time:natural': (date) => formatTime(date)
 }
 
 export const formatPresets = {
@@ -53,10 +54,10 @@ export const formatPresets = {
     timeNatural: 'time:natural',               // 15h45
   
     // 📅🕐 Date + Heure
-    dateTime: 'dd/MM/yyyy à HH:mm',            // 23/04/2025 à 15:45
-    dateTimeText: 'DD d MMMM yyyy à HH:mm',  // mercredi 23 avril 2025 à 3:45 PM
+    dateTime: 'dd/MM/yyyy à time:natural',            // 23/04/2025 à 15:45
+    dateTimeText: 'DD d MMMM yyyy à time:natural',  // mercredi 23 avril 2025 à 3:45 PM
     isoTimestamp: 'yyyy-MM-dd HH:mm:ss'        // 2025-04-23 15:45:30
-  }
+}
 
 export function formatDate(input, format = "", locale = 'fr-FR') {
     const date = input instanceof Date ? input : new Date(input)
