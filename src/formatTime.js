@@ -9,15 +9,12 @@ export function formatTime(input, options = {removeLeadingZero: true}) {
     const [h, m] = input.split(':');
     hours = parseInt(h, 10);
     minutes = parseInt(m, 10);
-    console.log(hours, minutes)
   } else {
     return '';
   }
   
-
   const hStr = removeLeadingZero && hours !== 0 ? String(hours) : String(hours).padStart(2, '0');
-  const mStr = minutes === 0 ? '' : String(minutes).padStart(2, '0');
+  const mStr = minutes === 0 && hours !== 0 ? '' : String(minutes).padStart(2, '0');
 
-
-  return mStr ? `${hStr}h${mStr}` : `${hStr}h`;
+  return (mStr || hours === 0) ? `${hStr}h${mStr}` : `${hStr}h`;
 }
