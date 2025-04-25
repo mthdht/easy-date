@@ -1,3 +1,5 @@
+import { formatTime } from "./formatTime.js";
+
 const formatTokens = {
     d: (date) => date.getDate(),
     dd: (date) => String(date.getDate()).padStart(2, '0'),
@@ -48,6 +50,7 @@ export const formatPresets = {
     time24h: 'HH:mm',                          // 15:45
     time24hSeconds: 'HH:mm:ss',               // 15:45:30
     time12h: 'hh:mm',                          // 3:45 PM
+    timeNatural: 'time:natural',               // 15h45
   
     // 📅🕐 Date + Heure
     dateTime: 'dd/MM/yyyy à HH:mm',            // 23/04/2025 à 15:45
@@ -63,7 +66,13 @@ export function formatDate(input, format = "", locale = 'fr-FR') {
         return date.toLocaleDateString(locale, format)
     }
 
+    if (format === 'timeNatural') {
+        return formatTime(input)
+      }
+
     let result = formatPresets[format] || format
+
+    const includeAmPm = (/\b(hh|h)\b/.test(result) && !/\bt\b/.test(result))
 
     // Trie les tokens par longueur pour éviter que `d` ne remplace dans `dd` ou `dddd`
     const tokens = Object.keys(formatTokens).sort((a, b) => b.length - a.length)
@@ -80,7 +89,7 @@ export function formatDate(input, format = "", locale = 'fr-FR') {
         result = result.replace(pattern, value)
     }
 
-    if (/\b(hh|h)\b/.test(format) && !/\bt\b/.test(format)) {
+    if (includeAmPm) {
         const amPm = date.getHours() < 12 ? 'AM' : 'PM'
         return `${result} ${amPm}`.trim()
     }
