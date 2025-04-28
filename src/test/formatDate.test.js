@@ -47,6 +47,7 @@ const testsTime = [
   { input: new Date('2025-04-23T14:07:00'), expected: '14h07', label: 'Time from Date 14:07' },
 ]
 
+
 function assertEqual(actual, expected, label) {
   if (actual === expected) {
     console.log(`✅ ${label}  attendu : ${expected}  reçu    : ${actual}`)
@@ -55,7 +56,7 @@ function assertEqual(actual, expected, label) {
   }
 }
 
-function runTests() {
+export function runformatDateTests() {
   const formatDateExemple = new Date('2025-04-23T15:45:30')
   const formatRelativeDateExemple = new Date('2025-04-25T12:00:00')
   console.log('---- TEST formatDate ----')
@@ -86,5 +87,3 @@ function runTests() {
     'Format toLocaleDateString avec fr-FR'
   )
 }
-
-runTests()
