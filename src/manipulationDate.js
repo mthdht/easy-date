@@ -25,3 +25,13 @@ export function addDate(input, { days = 0, months = 0, years = 0, hours = 0, min
 
     return date
 }
+
+export function subtractDate(input, params = {}) {
+  const negativeParams = {}
+  for (const key in params) {
+    if (typeof params[key] === 'number') {
+      negativeParams[key] = -params[key]
+    }
+  }
+  return addDate(input, negativeParams)
+}
