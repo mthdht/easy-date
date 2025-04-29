@@ -1,4 +1,4 @@
-import { addDate } from '../manipulationDate.js'
+import { addDate, subtractDate } from '../manipulationDate.js'
 
 function assertEqual(actual, expected, label) {
   if (actual === expected) {
@@ -24,6 +24,16 @@ const testsAddDate = [
   { input: new Date('2025-04-23T12:00:00'), addParams: { seconds: -45 }, expected: '2025-04-23T11:59:15', label: 'Subtract 45 seconds' },
 ]
 
+// Tests for subtractDate function
+const testsSubtractDate = [
+  { input: new Date('2025-04-23T12:00:00'), subParams: { days: 5 }, expected: '2025-04-18T12:00:00', label: 'Subtract 5 days' },
+  { input: new Date('2025-04-23T12:00:00'), subParams: { months: 2 }, expected: '2025-02-23T12:00:00', label: 'Subtract 2 months' },
+  { input: new Date('2025-04-23T12:00:00'), subParams: { years: 1 }, expected: '2024-04-23T12:00:00', label: 'Subtract 1 year' },
+  { input: new Date('2025-04-23T12:00:00'), subParams: { hours: 3 }, expected: '2025-04-23T09:00:00', label: 'Subtract 3 hours' },
+  { input: new Date('2025-04-23T12:00:00'), subParams: { minutes: 30 }, expected: '2025-04-23T11:30:00', label: 'Subtract 30 minutes' },
+  { input: new Date('2025-04-23T12:00:00'), subParams: { seconds: 45 }, expected: '2025-04-23T11:59:15', label: 'Subtract 45 seconds' },
+]
+
 export function runManipulationTests() {
     console.log('---- TEST addDate ----')
     for (const { input, addParams, expected, label } of testsAddDate) {
@@ -31,5 +41,12 @@ export function runManipulationTests() {
         const toCompare = new Date(expected)
         //const compared = compareDateComponents(result, new Date(expected))
         assertEqual(result.toJSON(), toCompare.toJSON(), label)
+    }
+
+    console.log('---- TEST subtractDate ----')
+    for (const { input, subParams, expected, label } of testsSubtractDate) {
+      const result = subtractDate(input, subParams)
+      const expectedDate = new Date(expected)
+      assertEqual(result.toJSON(), expectedDate.toJSON(), label)
     }
 }
